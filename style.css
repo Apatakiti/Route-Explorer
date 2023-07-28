@@ -11,24 +11,25 @@ body {
 h1 {
     text-align: center;
     color: rgb(0, 0, 0);
+    margin: 5px;
 }
 
 .grid-container {
-    display: grid;
-    margin: 40px;
-    grid-template-columns: repeat(10, 1fr);
-    border: .5px solid rgb(255, 0, 0);
-    width: 1000px;
-    height: 1000px;
+    display: flex;
+    padding: 2% 2%;
+    margin: 5%;
+    border: .5px solid rgb(9, 255, 0);
+    justify-content: center;
     overflow: hidden;
 }
 
-.grid-item {
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 0px;
-    background-color: aqua;
-    width: 100px;
-    height: 100px;
-    border: 2px solid black;
+#board {
+    width: 1000px;
+    height: 500px;
+}
+
+.cell {
+    border: 1px solid red;
+    background-color: white;
+    padding: 2.5px;
 }
