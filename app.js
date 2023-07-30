@@ -1,9 +1,9 @@
 let board = document.getElementById("board");
 
 visualizer = (row, col) => {
-   const visualizeCurrentNode = document.getElementById(`${'cell' + row}${col}`)
-   visualizeCurrentNode.className = 'currentCell'
-}
+  const visualizeCurrentNode = document.getElementById(`${"cell" + row}${col}`);
+  visualizeCurrentNode.className = "currentCell";
+};
 
 const graph_adjMatrix = [];
 
@@ -25,7 +25,7 @@ CreateGrid = () => {
 
     for (let col = 0; col < graph_adjMatrix.length; col++) {
       let tableCol = document.createElement("td");
-      tableCol.setAttribute("id", `${ 'cell' + row}${col}`);
+      tableCol.setAttribute("id", `${"cell" + row}${col}`);
       tableCol.setAttribute("border", "2px");
       tableCol.classList.add("cell");
       let TextNode = document.createTextNode(`[${row}, ${col}]`);
@@ -46,13 +46,11 @@ const startNode = 0;
 function bfs(graph, startNode) {
   const queue = [startNode];
   const visited = new Array(graph.length).fill(false);
-  console.log(visited)
 
   visited[startNode] = true;
 
   while (queue.length > 0) {
     const currentNode = queue.shift();
-    // console.log(currentNode); 
 
     // looping through the next promising Node
     for (let i = 0; i < graph[currentNode].length; i++) {
@@ -65,4 +63,3 @@ function bfs(graph, startNode) {
 }
 
 bfs(graph_adjMatrix, startNode);
-
