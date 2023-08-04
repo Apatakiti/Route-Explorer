@@ -1,22 +1,15 @@
 let board = document.getElementById("board");
 
-visualizer = (row, col) => {
+visualizer = ([row, col]) => {
   const visualizeCurrentNode = document.getElementById(`${"cell" + row}${col}`);
   visualizeCurrentNode.className = "currentCell";
 };
 
 const graph_adjMatrix = [];
 
-// filling the graph with nested array of zeros(0)
-// with 10 by 10 row/col
-for (let index = 0; index < 10; index++) {
-  graph_adjMatrix[index] = new Array(10).fill(0);
-}
-
-// create Edge
-function addEdge(row_x, col_y) {
-  graph_adjMatrix[row_x][col_y] = 1;
-  graph_adjMatrix[col_y][row_x] = 1;
+// Two dimensional graph (20 by 20)
+for (let index = 0; index < 20; index++) {
+  graph_adjMatrix[index] = new Array(20).fill(0);
 }
 
 CreateGrid = () => {
@@ -32,34 +25,77 @@ CreateGrid = () => {
 
       tableCol.appendChild(TextNode);
       tableRow.appendChild(tableCol);
-
-      addEdge(row, col);
     }
+
     board.appendChild(tableRow);
   }
 };
 
 CreateGrid();
 
-const startNode = 0;
+function validate_cell(
+  nextVisitingRowNode,
+  nextVisitingColNode,
+  graphrow,
+  graphcol
+) {
+  return (
+    0 <= nextVisitingRowNode &&
+    nextVisitingRowNode < graphrow &&
+    0 <= nextVisitingColNode &&
+    nextVisitingColNode < graphcol
+  );
+}
 
-function bfs(graph, startNode) {
-  const queue = [startNode];
-  const visited = new Array(graph.length).fill(false);
+function BFS_twoDimensionalGraph(graph) {
+  const graph_Row = graph.length;
+  const graph_Col = graph[0].length;
 
-  visited[startNode] = true;
+  const visited = new Array(graph_Row)
+    .fill()
+    .map(() => new Array(graph_Col).fill(false));
 
-  while (queue.length > 0) {
-    const currentNode = queue.shift();
+  // x and y direction coordinate (right, left, up, down)
+  const directions = [
+    [1, 0],
+    [-1, 0],
+    [0, 1],
+    [0, -1],
+  ];
 
-    // looping through the next promising Node
-    for (let i = 0; i < graph[currentNode].length; i++) {
-      if (graph[currentNode][i] === 1 && !visited[i]) {
-        queue.push(i);
-        visited[i] = true;
+  for (let startRow = 0; startRow < graph_Row; startRow++) {
+    for (let startCol = 0; startCol < graph_Col; startCol++) {
+      // if the coordinateStartNode is not visited
+      if (!visited[startRow][startCol]) {
+        // assigning startCoordinateNode to be true
+        visited[startRow][startCol] = true;
+
+        // initiating the queue Nested Array
+        const queue = [[startRow, startCol]];
+
+        while (queue.length) {
+          // offLoad currentCoordinateNode from queue
+          const [currentRow, currentCol] = queue.shift();
+
+          // looping through each surrounding Node
+          for (const [directrow, directcol] of directions) {
+            // Redirecting into a single rol and col coordinate
+            const nextRow = currentRow + directrow;
+            const nextCol = currentCol + directcol;
+
+            if (
+              validate_cell(nextRow, nextCol, graph_Row, graph_Col) &&
+              !visited[nextRow][nextCol]
+            ) {
+              visited[nextRow][nextCol] = true;
+              queue.push([nextRow, nextCol]);
+              visualizer([nextRow, nextCol]);
+            }
+          }
+        }
       }
     }
   }
 }
 
-bfs(graph_adjMatrix, startNode);
+BFS_twoDimensionalGraph(graph_adjMatrix);
