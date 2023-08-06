@@ -5,11 +5,15 @@ visualizer = ([row, col]) => {
   visualizeCurrentNode.className = "currentCell";
 };
 
+function Delay() {
+  return new Promise((res) => setTimeout(res, 100));
+}
+
 const graph_adjMatrix = [];
 
 // Two dimensional graph (20 by 20)
-for (let index = 0; index < 20; index++) {
-  graph_adjMatrix[index] = new Array(20).fill(0);
+for (let index = 0; index < 6; index++) {
+  graph_adjMatrix[index] = new Array(6).fill(0);
 }
 
 CreateGrid = () => {
@@ -47,7 +51,7 @@ function validate_cell(
   );
 }
 
-function BFS_twoDimensionalGraph(graph) {
+async function BFS_twoDimensionalGraph(graph) {
   const graph_Row = graph.length;
   const graph_Col = graph[0].length;
 
@@ -65,31 +69,24 @@ function BFS_twoDimensionalGraph(graph) {
 
   for (let startRow = 0; startRow < graph_Row; startRow++) {
     for (let startCol = 0; startCol < graph_Col; startCol++) {
-      // if the coordinateStartNode is not visited
       if (!visited[startRow][startCol]) {
-        // assigning startCoordinateNode to be true
         visited[startRow][startCol] = true;
-
-        // initiating the queue Nested Array
         const queue = [[startRow, startCol]];
 
         while (queue.length) {
-          // offLoad currentCoordinateNode from queue
+          await Delay();
           const [currentRow, currentCol] = queue.shift();
+          visualizer([currentRow, currentCol]);
 
-          // looping through each surrounding Node
           for (const [directrow, directcol] of directions) {
-            // Redirecting into a single rol and col coordinate
             const nextRow = currentRow + directrow;
             const nextCol = currentCol + directcol;
-
             if (
               validate_cell(nextRow, nextCol, graph_Row, graph_Col) &&
               !visited[nextRow][nextCol]
             ) {
               visited[nextRow][nextCol] = true;
               queue.push([nextRow, nextCol]);
-              visualizer([nextRow, nextCol]);
             }
           }
         }
