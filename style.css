@@ -1,39 +1,51 @@
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 body {
-    background-color: rgb(112, 193, 250);
+  background-color: rgb(112, 193, 250);
 }
 
 h1 {
-    text-align: center;
-    color: rgb(0, 0, 0);
-    margin: 5px;
+  text-align: center;
+  color: rgb(0, 0, 0);
+  margin: 5px;
 }
 
 .grid-container {
-    display: flex;
-    padding: 2% 2%;
-    margin: 5%;
-    border: .5px solid rgb(9, 255, 0);
-    justify-content: center;
-    overflow: hidden;
+  display: flex;
+  padding: 2% 2%;
+  margin: 5%;
+  border: 0.5px solid rgb(9, 255, 0);
+  justify-content: center;
+  overflow: hidden;
 }
 
 #board {
-    width: 1000px;
-    height: 500px;
+  width: 1000px;
+  height: 500px;
 }
 
 .cell {
-    border: 1px solid red;
-    background-color: white;
-    padding: 2.5px;
+  border: 1px solid red;
+  background-color: white;
+  padding: 2.5px;
 }
 
 .currentCell {
-    background-color: purple;
+  background-color: purple;
+}
+
+.startNode {
+  background-color: rgb(255, 82, 82);
+}
+
+.targetNode {
+  background-color: rgb(255, 25, 0);
+}
+
+.shortestpath {
+  background-color: rgb(255, 174, 0);
 }
