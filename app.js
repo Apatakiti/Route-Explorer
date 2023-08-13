@@ -1,26 +1,57 @@
 let board = document.getElementById("board");
 
-visualizer = ([row, col]) => {
+visualizeVisiting = ([row, col]) => {
   const visualizeCurrentNode = document.getElementById(`${"cell" + row}${col}`);
   visualizeCurrentNode.className = "currentCell";
+};
+
+visualizeShortestPath = ([row, col]) => {
+  const visualizeCurrentNode = document.getElementById(`${"cell" + row}${col}`);
+  visualizeCurrentNode.className = "shortestpath";
+};
+
+visualizeStartNandTargetN = (startN, targetN) => {
+  const visualizeStartNode = document.getElementById(
+    `${"cell" + startN[0]}${startN[1]}`
+  );
+  visualizeStartNode.className = "startNode";
+
+  const visualizeTargetNode = document.getElementById(
+    `${"cell" + targetN[0]}${targetN[1]}`
+  );
+  visualizeTargetNode.className = "targetNode";
 };
 
 function Delay() {
   return new Promise((res) => setTimeout(res, 100));
 }
 
-const graph_adjMatrix = [];
+const grid_adjMatrix = [];
 
-// Two dimensional graph (20 by 20)
+// Create Grid (11 by 11)
 for (let index = 0; index < 11; index++) {
-  graph_adjMatrix[index] = new Array(11).fill(0);
+  grid_adjMatrix[index] = new Array(11).fill(0);
 }
 
-CreateGrid = () => {
-  for (let row = 0; row < graph_adjMatrix.length; row++) {
+// Add an obstacle in the Grid to prevent infinite loop
+grid_adjMatrix[4][4] = 1;
+grid_adjMatrix[5][4] = 1;
+grid_adjMatrix[7][3] = 1;
+grid_adjMatrix[2][4] = 1;
+grid_adjMatrix[3][4] = 1;
+grid_adjMatrix[3][1] = 1;
+grid_adjMatrix[8][4] = 1;
+grid_adjMatrix[0][4] = 1;
+grid_adjMatrix[1][4] = 1;
+grid_adjMatrix[6][0] = 1;
+grid_adjMatrix[6][2] = 1;
+
+// 2D graph for traversing visualization
+CreateGraph = () => {
+  for (let row = 0; row < grid_adjMatrix.length; row++) {
     let tableRow = document.createElement("tr");
 
-    for (let col = 0; col < graph_adjMatrix.length; col++) {
+    for (let col = 0; col < grid_adjMatrix.length; col++) {
       let tableCol = document.createElement("td");
       tableCol.setAttribute("id", `${"cell" + row}${col}`);
       tableCol.setAttribute("border", "2px");
@@ -35,122 +66,78 @@ CreateGrid = () => {
   }
 };
 
-CreateGrid();
+CreateGraph();
 
-// Not to go beyond the grid Range (- range)
-const validate_cell = (
-  nextVisitingRowNode,
-  nextVisitingColNode,
-  graphrow,
-  graphcol
+const direction = [
+  [1, 0],
+  [-1, 0],
+  [0, 1],
+  [0, -1],
+];
+const Validate_Cell = (
+  nextRowNode,
+  nextColNode,
+  graphRowLength,
+  graphColLength
 ) => {
   return (
-    0 <= nextVisitingRowNode &&
-    nextVisitingRowNode < graphrow &&
-    0 <= nextVisitingColNode &&
-    nextVisitingColNode < graphcol
+    nextRowNode >= 0 &&
+    nextColNode >= 0 &&
+    graphRowLength > nextRowNode &&
+    graphColLength > nextColNode
   );
 };
 
-const directions = [
-  [1, 0], // down
-  [-1, 0], // up
-  [0, 1], // right
-  [0, -1], // left
-];
+async function BFS_2D_trackShortestPath(grid, startN, targetN) {
+  const graph_Row = grid.length;
+  const graph_Col = grid[0].length;
 
-async function BFS_2D_ShortestPath(graph, start_Coord_Node, target_Coord_Node) {
-  const graph_Row = graph.length;
-  const graph_Col = graph[0].length;
+  const queue = [
+    {
+      currentRowNode: startN[0],
+      currentColNode: startN[1],
+      trackPath: [[startN[0], startN[1]]],
+    },
+  ];
+  const visited = new Set();
 
-  const visited = new Array(graph_Row)
-    .fill()
-    .map(() => new Array(graph_Col).fill(false));
+  while (queue.length) {
+    const { currentRowNode, currentColNode, trackPath } = queue.shift();
 
-  for (let startRow = start_Coord_Node[0]; startRow < graph_Row; startRow++) {
-    for (let startCol = start_Coord_Node[1]; startCol < graph_Col; startCol++) {
-      if (!visited[startRow][startCol]) {
-        visited[startRow][startCol] = true;
-        const queue = [[startRow, startCol]];
+    visited.add(`${currentRowNode},${currentColNode}`);
+    await Delay();
+    visualizeVisiting([currentRowNode, currentColNode]);
 
-        while (queue.length) {
-          await Delay();
-          const [currentRow, currentCol] = queue.shift();
-          visualizer([currentRow, currentCol]);
+    if (currentRowNode === targetN[0] && currentColNode === targetN[1]) {
+      for (const [currentRow, currentCol] of trackPath) {
+        await Delay();
+        visualizeShortestPath([currentRow, currentCol]);
+        visualizeStartNandTargetN(startN, targetN);
+      }
+      return; // stop on finding path
+    }
 
-          // Terminate from further visiting of node on getting to the target node
-          if (
-            currentRow === target_Coord_Node[0] &&
-            currentCol === target_Coord_Node[1]
-          ) {
-            BFSshortestpath(start_Coord_Node, target_Coord_Node, visited);
-            return;
-          }
-
-          for (const [directrow, directcol] of directions) {
-            const nextRow = currentRow + directrow;
-            const nextCol = currentCol + directcol;
-
-            if (
-              validate_cell(nextRow, nextCol, graph_Row, graph_Col) &&
-              !visited[nextRow][nextCol]
-            ) {
-              visited[nextRow][nextCol] = true;
-              queue.push([nextRow, nextCol]);
-            }
-          }
-        }
+    for (const [directRow, directCol] of direction) {
+      let nextRow = currentRowNode + directRow;
+      let nextCol = currentColNode + directCol;
+      if (
+        Validate_Cell(nextRow, nextCol, graph_Row, graph_Col) &&
+        grid[nextRow][nextCol] === 0 &&
+        !visited.has(`${nextRow},${nextCol}`)
+      ) {
+        queue.push({
+          currentRowNode: nextRow,
+          currentColNode: nextCol,
+          trackPath: [...trackPath, [nextRow, nextCol]],
+        });
       }
     }
   }
+  return; // No path found
 }
 
-const validate_previousParentNode = (
-  nextBacktrackParentRow,
-  nextBacktrackParentCol
-  //VisitedParentNode
-) => {
-  return (
-    0 <= nextBacktrackParentRow &&
-    nextBacktrackParentRow < graph_adjMatrix &&
-    0 <= nextBacktrackParentCol &&
-    nextBacktrackParentCol < graph_adjMatrix[0]
-    // && graph_adjMatrix[nextBacktrackParentRow][nextBacktrackParentCol] !== 0
-    // && !VisitedParentNode[nextBacktrackParentRow][nextBacktrackParentCol] &&
-    // VisitedParentNode[nextBacktrackParentRow][nextBacktrackParentCol]
-  );
-};
+const startNode = [2, 1];
+const targetNode = [6, 5];
 
-const BFSshortestpath = (startNode, targetNode, parentNode) => {
-  let path = [];
-  let [currentParentRow, currentParentCol] = targetNode;
-
-  // BackTracking from the targetNode
-  while (
-    currentParentRow !== startNode[0] ||
-    currentParentCol !== startNode[1]
-  ) {
-    path.unshift([currentParentRow, currentParentCol]);
-
-    for (const [toNextParentRow, toNextParentCol] of directions) {
-      const nextParentRow = currentParentRow - toNextParentRow;
-      const nextParentCol = currentParentCol - toNextParentCol;
-
-      if (
-        validate_previousParentNode(nextParentRow, nextParentCol, parentNode)
-      ) {
-        currentParentRow = nextParentRow;
-        currentParentCol = nextParentCol;
-        break;
-      }
-    }
-  }
-
-  path.unshift(startNode);
-  // no path console.log(path)
-};
-
-let startN = [3, 3];
-let targetN = [5, 5];
-
-BFS_2D_ShortestPath(graph_adjMatrix, startN, targetN);
+visualizeStartNandTargetN(startNode, targetNode);
+BFS_2D_trackShortestPath(grid_adjMatrix, startNode, targetNode);
