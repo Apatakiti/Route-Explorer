@@ -1,16 +1,15 @@
-import { BSF} from "./modules/Algorithms/BSF.js";
+import { BSF } from "./modules/Algorithms/BSF.js";
 // import { DFS } from "./modules/Algorithms/DFS,js";
 import { Visualizer } from "./modules/visualizer.js";
-
 
 class Route_explorer {
   Search_with_BSF() {
     const startNode = [2, 2];
     const targetNode = [4, 6];
     const RunBSF = new BSF();
-    const Visualize = new Visualizer()
+    const Visualize = new Visualizer();
     RunBSF.TraverseBSF(startNode, targetNode);
-    Visualize.startNandTargetN(startNode, targetNode)
+    Visualize.startNandTargetN(startNode, targetNode);
   }
 
   // Search_with_DFS() {
@@ -24,8 +23,4 @@ class Route_explorer {
   // }
 }
 
-new Route_explorer().Search_with_BSF()
-
-
-
-
+new Route_explorer().Search_with_BSF();

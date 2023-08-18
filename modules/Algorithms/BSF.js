@@ -41,8 +41,8 @@ export class BSF {
         currentColNode === targetNode[1]
       ) {
         for (const [currentRow, currentCol] of trackPath) {
-          await Visualize.delay()
-          Visualize.shortestPath(currentRow, currentCol)
+          await Visualize.delay();
+          Visualize.shortestPath(currentRow, currentCol);
         }
         return; // stop when path is found
       }
