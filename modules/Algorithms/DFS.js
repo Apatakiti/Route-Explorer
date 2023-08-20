@@ -1,47 +1,39 @@
-import { Grid_adjMatrix } from "../Grid-graph.js";
 import { Visualizer } from "../visualizer.js";
 
-const grid_graph = new Grid_adjMatrix(11, 11);
-const Matrix = grid_graph.matrix;
-const tableRow = Matrix.length;
-const tableCol = Matrix[0].length;
-const visited = new Array(tableRow)
-  .fill(0)
-  .map(() => new Array(tableCol).fill(false));
-
-const Visualize = new Visualizer();
+const visualize = new Visualizer()
 
 export class DFS {
-  async dfsTraversing(startRow, startCol, targetRow, targetCol) {
+ async dfsTraversing(matrix, currentRow, currentCol, targetNode, visited) {
     if (
-      startRow < 0 ||
-      startRow >= tableRow ||
-      startCol < 0 ||
-      startCol >= tableCol ||
-      visited[startRow][startCol] ||
-      Matrix[startRow][startCol] === 0
+      currentRow < 0                  ||
+      currentRow >= matrix.length     ||
+      currentCol < 0                  ||
+      currentCol >= matrix[0].length  ||
+      visited[currentRow][currentCol] ||
+      matrix[currentRow][currentCol] === 1
     ) {
       return false;
     }
 
-    visited[startRow][startCol] = true;
+    visited[currentRow][currentCol] = true;
 
-    await Visualize.delay();
-    Visualize.visiting(startRow, startCol);
-
-    if (startRow === targetRow && startCol === targetCol) {
+    // Base case
+    if (currentRow === targetNode[0] && currentCol === targetNode[1]) {
       return true;
     }
 
+    await visualize.delay()
+    visualize.visiting(currentRow, currentCol)
+
     if (
-      (await dfsTraversing(startRow - 1, startCol - 1, target, targetCol)) ||
-      (await dfsTraversing(startRow + 1, startCol, targetRow, targetCol)) ||
-      (await dfsTraversing(startRow, startCol, targetRow, targetCol)) ||
-      (await dfsTraversing(startRow, startCol + 1, targetRow, targetCol))
+       await this.dfsTraversing( matrix, currentRow + 1, currentCol, targetNode, visited ) ||
+       await this.dfsTraversing( matrix, currentRow - 1, currentCol, targetNode, visited ) ||
+       await this.dfsTraversing( matrix, currentRow, currentCol + 1, targetNode, visited ) ||
+       await this.dfsTraversing( matrix, currentRow, currentCol - 1, targetNode, visited )
     ) {
       return true;
     }
 
-    return false; // if target node not found
+    return false;
   }
 }
