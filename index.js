@@ -6,8 +6,8 @@ import { Grid_adjMatrix } from "./modules/Grid-graph.js";
 class Route_explorer {
 
   start_target_Nodes() {
-    const startNode = [2, 2];
-    const targetNode = [4, 6];
+    const startNode = [0, 0];
+    const targetNode = [3, 3];
     const start_target_coords = [startNode, targetNode];
     return start_target_coords;
   }
@@ -24,20 +24,14 @@ class Route_explorer {
   Search_with_DFS() {
     const [start, target] = this.start_target_Nodes()
 
+    const grid = new Grid_adjMatrix(11, 11);
+    const Matrix = grid.matrix;
+    grid.obstacle(10, 1, 1); 
+
     const RunDFS = new DFS();
     const Visualize = new Visualizer();
 
-    const grid = new Grid_adjMatrix(11, 11);
-    const Matrix = grid.matrix;
-    grid.obstacle(3, 3, 0);
-
-    const tableRow = Matrix.length;
-    const tableCol = Matrix[0].length;
-    const visited = new Array(tableRow)
-      .fill(0)
-      .map(() => new Array(tableCol).fill(false));
-
-    RunDFS.dfsTraversing( Matrix, start[0], start[1], target, visited );
+    RunDFS.shortestPathDFS(Matrix, start, target)
     Visualize.startNandTargetN(start, target);
   }
 }
