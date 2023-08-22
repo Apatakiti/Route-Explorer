@@ -1,39 +1,53 @@
 import { Visualizer } from "../visualizer.js";
 
-const visualize = new Visualizer()
+const visualize = new Visualizer();
 
 export class DFS {
- async dfsTraversing(matrix, currentRow, currentCol, targetNode, visited) {
+ async shortestPathDFS(adjMatrix, startNode, targetNode) {
+    const path = [];
+    const visited = new Set();
+
+    this.dfs( startNode[0], startNode[1], path, visited, adjMatrix, targetNode );
+
+      for (const [row, col] of path) {
+       await visualize.delay()
+       visualize.shortestPath(row, col)
+      }
+  }
+
+ async dfs(x, y, path, visited, adjMatrix, targetNode) {
     if (
-      currentRow < 0                  ||
-      currentRow >= matrix.length     ||
-      currentCol < 0                  ||
-      currentCol >= matrix[0].length  ||
-      visited[currentRow][currentCol] ||
-      matrix[currentRow][currentCol] === 1
+      x < 0                    ||
+      x >= adjMatrix.length    ||
+      y < 0                    ||
+      y >= adjMatrix[0].length ||
+      visited.has(`${x}-${y}`) ||
+      adjMatrix[x][y] !== 0
     ) {
       return false;
     }
 
-    visited[currentRow][currentCol] = true;
+    path.push([x, y]);
+    visited.add(`${x}-${y}`);
 
-    // Base case
-    if (currentRow === targetNode[0] && currentCol === targetNode[1]) {
+    if (x === targetNode[0] && y === targetNode[1]) {
       return true;
     }
-
-    await visualize.delay()
-    visualize.visiting(currentRow, currentCol)
 
     if (
-       await this.dfsTraversing( matrix, currentRow + 1, currentCol, targetNode, visited ) ||
-       await this.dfsTraversing( matrix, currentRow - 1, currentCol, targetNode, visited ) ||
-       await this.dfsTraversing( matrix, currentRow, currentCol + 1, targetNode, visited ) ||
-       await this.dfsTraversing( matrix, currentRow, currentCol - 1, targetNode, visited )
+     await this.dfs(x + 1, y, path, visited, adjMatrix, targetNode) ||
+     await this.dfs(x - 1, y, path, visited, adjMatrix, targetNode) ||
+     await this.dfs(x, y + 1, path, visited, adjMatrix, targetNode) ||
+     await this.dfs(x, y - 1, path, visited, adjMatrix, targetNode)
     ) {
+      await visualize.delay()
+      // This tracks path immediately and always not necessarily the shortest path
+      // To visualize the recursive visitation
+      // visualize.visiting(x, y)
       return true;
     }
 
+    path.pop();
     return false;
   }
 }
