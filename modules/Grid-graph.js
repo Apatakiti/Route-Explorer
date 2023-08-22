@@ -19,7 +19,7 @@ export class Grid_adjMatrix {
   // Add Obstacle in matrix
   obstacle(row, col, obstacle) {
     // validate
-    if (row > 0 && col > 0 && row < this.rows && col < this.cols) {
+    if (row >= 0 && col >= 0 && row <= this.rows && col <= this.cols) {
       this.matrix[row][col] = obstacle;
     }
   }
