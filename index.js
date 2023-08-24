@@ -3,6 +3,7 @@ import { DFS } from "./modules/Algorithms/DFS.js";
 import { Visualizer } from "./modules/visualizer.js";
 import { Grid_adjMatrix } from "./modules/Grid-graph.js";
 import { dijkstra } from "./modules/Algorithms/DIjsktra.js";
+import { A_star } from "./modules/Algorithms/A_star.js"; 
 
 class Route_explorer {
 
@@ -48,6 +49,21 @@ class Route_explorer {
     dijkstra(Matrix, start, target)
     Visualize.startNandTargetN(start, target);
   }
+
+  Search_with_Astar() {
+    const [start, target] = this.start_target_Nodes()
+
+    const grid = new Grid_adjMatrix(11, 11);
+    const Matrix = grid.matrix;
+    grid.obstacle(5, 0, 1); 
+
+    const run_Astar = new A_star()
+    const Visualize = new Visualizer();
+
+    run_Astar.aStar(Matrix, start, target)
+    Visualize.startNandTargetN(start, target);
+  }
+
 }
 
-new Route_explorer().Search_with_Dijsktra()
+new Route_explorer().Search_with_Astar()
