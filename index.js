@@ -4,14 +4,29 @@ import { Visualizer } from "./modules/visualizer.js";
 import { Grid_adjMatrix } from "./modules/Grid-graph.js";
 import { dijkstra } from "./modules/Algorithms/DIjsktra.js";
 import { Astar }  from "./modules/Algorithms/A_star.js"
+import { Random_Start_TargetNode } from "./modules/Start-targetNode.js";
 
-class Route_explorer {
+export class Route_explorer {
 
   start_target_Nodes() {
-    const startNode = [0, 0];
-    const targetNode = [4, 4];
-    const start_target_coords = [startNode, targetNode];
+   const [rows, cols] = this.total_Rows_Cols() 
+ 
+   const start_target_node = Random_Start_TargetNode(rows, cols)
+
+   // console.log(startNode, targetNode)
+   const start_target_coords = [
+      start_target_node.startNode, 
+      start_target_node.targetNode
+    ];
+
     return start_target_coords;
+  }
+
+  total_Rows_Cols() {
+    const rows = 11
+    const cols = 11
+
+    return [rows, cols]
   }
 
   Search_with_BFS() {
@@ -25,8 +40,9 @@ class Route_explorer {
 
   Search_with_DFS() {
     const [start, target] = this.start_target_Nodes()
+    const [row, col] = this.total_Rows_Cols()
 
-    const grid = new Grid_adjMatrix(11, 11);
+    const grid = new Grid_adjMatrix(row, col);
     const Matrix = grid.matrix;
     grid.obstacle(10, 0, 1); 
 
@@ -40,10 +56,11 @@ class Route_explorer {
   // locally optimistic Approach
   Search_with_Dijsktra() {
     const [start, target] = this.start_target_Nodes()
+    const [row, col] = this.total_Rows_Cols()
 
-    const grid = new Grid_adjMatrix(11, 11);
+    const grid = new Grid_adjMatrix(row, col);
     const Matrix = grid.matrix;
-    grid.obstacle(10, 1, Infinity); 
+    grid.obstacle(4, 1, Infinity);
 
     const Visualize = new Visualizer();
 
@@ -54,8 +71,9 @@ class Route_explorer {
   // Optimistic approach ( weighted ) 
   Search_with_Astar() {
     const [start, target] = this.start_target_Nodes()
+    const [row, col] = this.total_Rows_Cols()
 
-    const grid = new Grid_adjMatrix(11, 11);
+    const grid = new Grid_adjMatrix(row, col);
     const Matrix = grid.matrix;
     grid.obstacle(4, 0, Infinity); 
 
@@ -68,4 +86,4 @@ class Route_explorer {
 
 }
 
-new Route_explorer().Search_with_Astar()
+new Route_explorer().Search_with_Dijsktra()
