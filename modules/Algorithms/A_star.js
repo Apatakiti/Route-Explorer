@@ -21,7 +21,7 @@ const Visualize = new Visualizer()
       return this.elements.length === 0;
   }
   
-  aStar(grid, start, targetNode) {
+ async aStar(grid, start, targetNode) {
     const tableRow = grid.length;
     const tableCol = grid[0].length;
     const openList = new Astar();
@@ -35,6 +35,7 @@ const Visualize = new Visualizer()
         const current = openList.dequeue();
 
         // heuristic_EstimatedCost approach gives shortest path without searching
+        await Visualize.delay()
         Visualize.shortestPath(current[0], current[1])
 
         if (current[0] === targetNode[0] && current[1] === targetNode[1]) {
