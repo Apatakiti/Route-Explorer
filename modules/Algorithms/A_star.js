@@ -1,85 +1,80 @@
 import { Visualizer } from "../visualizer.js";
 const Visualize = new Visualizer()
 
-export class A_star {
+ export class Astar {
 
- async aStar(grid, startNode, targetNode) {
+  // priority Queue
+  constructor() {
+      this.elements = [];
+  }
 
+  enqueue(element, priority) {
+      this.elements.push({ element, priority });
+      this.elements.sort((a, b) => a.priority - b.priority);
+  }
+
+  dequeue() {
+      return this.elements.shift().element;
+  }
+
+  isEmpty() {
+      return this.elements.length === 0;
+  }
+  
+  aStar(grid, start, targetNode) {
     const tableRow = grid.length;
     const tableCol = grid[0].length;
-    const openSet = [startNode];
-    const cameFrom = new Array(tableRow).fill(null).map(() => new Array(tableCol).fill(null));
-    const ActualCost_gScore = new Array(tableRow).fill(null).map(() => new Array(tableCol).fill(Number.POSITIVE_INFINITY));
-    const TotalCost_fScore = new Array(tableRow).fill(null).map(() => new Array(tableCol).fill(Number.POSITIVE_INFINITY));
+    const openList = new Astar();
+    const cameFrom = new Map();
+    const ActualCost_gScore = new Map();
 
-    const [startRow, startCol] = startNode;
-    const [targetRow, targetCol] = targetNode;
+    ActualCost_gScore.set(start, 0);
+    openList.enqueue(start, this.heuristic_EstimatedCost(start, targetNode));
 
-    ActualCost_gScore[startRow][startCol] = 0;
-    TotalCost_fScore[startRow][startCol] = this.heuristic_EstimatedCost(startRow, startCol, targetRow, targetCol);
+    while (!openList.isEmpty()) {
+        const current = openList.dequeue();
 
-    while (openSet.length > 0) {
-      const [currentRow, currentCol] = this.getLowestFScoreNode( openSet, TotalCost_fScore );
+        // heuristic_EstimatedCost approach gives shortest path without searching
+        Visualize.shortestPath(current[0], current[1])
 
-      await Visualize.delay()
-      Visualize.shortestPath(currentRow, currentCol)
-      
-      if (currentRow === targetRow && currentCol === targetCol) {
-        return 
-      }
-
-      openSet.splice(openSet.indexOf([currentRow, currentCol]), 1);
-
-      const neighbors = this.getNeighbors(grid, currentRow, currentCol);
-
-      for (const [neighborRow, neighborCol] of neighbors) {
-        const tentativeGScore = ActualCost_gScore[currentRow][currentCol] + grid[neighborRow][neighborCol];
-
-        if (tentativeGScore < ActualCost_gScore[neighborRow][neighborCol]) {
-          cameFrom[neighborRow][neighborCol] = [currentRow, currentCol];
-          ActualCost_gScore[neighborRow][neighborCol] = tentativeGScore;
-          TotalCost_fScore[neighborRow][neighborCol] = ActualCost_gScore[neighborRow][neighborCol] + this.heuristic_EstimatedCost(
-              neighborRow, neighborCol, targetRow, targetCol
-            );
-
-          if ( !openSet.some( (node) => node[0] === neighborRow && node[1] === neighborCol ) ) {
-            openSet.push([neighborRow, neighborCol]);
-          }
+        if (current[0] === targetNode[0] && current[1] === targetNode[1]) {
+            return 
         }
-      }
+
+        const neighbors = this.re_direct(current[0], current[1], tableRow, tableCol);
+
+        for (const neighbor of neighbors) {
+            const tentativeActualCost_gScore = ActualCost_gScore.get(current) + grid[neighbor[0]][neighbor[1]];
+
+            if (
+              !ActualCost_gScore.has(neighbor) || 
+              tentativeActualCost_gScore < ActualCost_gScore.get(neighbor)
+            ) {
+                cameFrom.set(neighbor, current);
+                ActualCost_gScore.set(neighbor, tentativeActualCost_gScore);
+                const TotalCost_fScore = tentativeActualCost_gScore + this.heuristic_EstimatedCost(neighbor, targetNode);
+                openList.enqueue(neighbor, TotalCost_fScore);
+            }
+        }
     }
 
     return null; // No path found
   }
 
-  heuristic_EstimatedCost(rowA, colA, rowB, colB) {
+  heuristic_EstimatedCost(currentNode, targetNode) {
     // Manhattan distance heuristic |A2(col) - A1(row)| + |B2 - B1|
-    // Or point horizontal connects the vertical target node
-    return Math.abs(rowA - rowB) + Math.abs(colA - colB);
+    // Or point horizontal connects the vertical target currentNode
+    return Math.abs(currentNode[0] - targetNode[0]) + Math.abs(currentNode[1] - targetNode[1]);
   }
 
-  getLowestFScoreNode(nodes, fScore) {
-    let lowestNode = nodes[0];
-    let lowestScore = fScore[lowestNode[0]][lowestNode[1]];
-
-    for (const [row, col] of nodes) {
-      if (fScore[row][col] < lowestScore) {
-        lowestNode = [row, col];
-        lowestScore = fScore[row][col];
-      }
-    }
-
-    return lowestNode;
-  }
-
-  getNeighbors(grid, row, col) {
-    const neighbors = [];
-
-    if (row > 0) neighbors.push([row - 1, col]);
-    if (row < grid.length - 1) neighbors.push([row + 1, col]);
-    if (col > 0) neighbors.push([row, col - 1]);
-    if (col < grid[0].length - 1) neighbors.push([row, col + 1]);
-
-    return neighbors;
+  re_direct(row, col, tableRow, tableCol) {
+    const direction = [];
+    
+    if (row > 0) direction.push([row - 1, col]);
+    if (row < tableRow - 1) direction.push([row + 1, col]);
+    if (col > 0) direction.push([row, col - 1]);
+    if (col < tableCol - 1) direction.push([row, col + 1]);
+    
+    return direction;
   }
 }
