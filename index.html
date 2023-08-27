@@ -9,13 +9,55 @@
   </head>
 
   <body>
-    <h1>Graph/Shortest Path</h1>
+    <header>Route Explorer</header>
+
+    <nav id="nav">
+      <ul id="VisualizingNav">   
+      <li>
+        <span>generate Maze</span>
+         <select  id="selectMaze">
+              <option value="Basic_Random">Basic Random</option>
+              <option value="Recursive_Division">
+                Recursive Division
+                <span>Recommended</span>
+              </option>
+            </select>
+      </li>
+
+      <li>
+          <select  id="Algorithm">
+            <option value="BFS">BFS</option>
+            <option value="DFS">DFS</option>
+            <option value="Dijsktra">Dijsktra</option>
+            <option value="A*">A*</option>
+        </select>
+      </li>
+      <li>
+        <button>visualize 
+          <span id="show_Algo_selected">selectAlgo</span>
+        </button>
+      </li>
+      <li>
+        <button id="clearBoard">
+          clear board
+        </button>
+      </li>
+      </ul>
+
+      <ul>
+        <li>yellow path</li>
+        <li>white unvisited</li>
+        <li>blue Maze</li>
+        <li>dark blue visited</li>
+      </ul>
+    </nav>
 
     <div class="grid-container">
       <table>
         <tbody border="1" id="board"></tbody>
       </table>
     </div>
+
   </body>
   <script type="module" src="./index.js"></script>
 </html>
