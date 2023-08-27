@@ -11,7 +11,7 @@ const runDfs = new DFS()
 const selectedMaze = document.getElementById("selectMaze");
 const selectedAlgo = document.getElementById("Algorithm")  
 
-grid.graph(15, 30)
+grid.graph(15, 15)
 
 selectedMaze.addEventListener('change', () => {
 
