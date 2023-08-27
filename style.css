@@ -8,17 +8,19 @@ body {
   background-color: rgb(112, 193, 250);
 }
 
-h1 {
-  text-align: center;
-  color: rgb(0, 0, 0);
-  margin: 5px;
+header {
+  text-align: left;
+  color: rgb(72, 83, 91);
+  padding: 2%;
+  padding-left:  4%;
+  font-size: 60px;
 }
 
 .grid-container {
   display: flex;
-  padding: 2% 2%;
-  margin: 5%;
-  border: 0.5px solid rgb(9, 255, 0);
+  padding: 1% 1%;
+  margin: 1%;
+  /* border: 0.5px solid rgb(9, 255, 0); */
   justify-content: center;
   overflow: hidden;
 }
@@ -28,24 +30,34 @@ h1 {
   height: 500px;
 }
 
-.cell {
-  border: 1px solid red;
+
+.cell,.cellRow {
+  border: .1px solid rgb(0, 255, 195);
   background-color: white;
-  padding: 2.5px;
+  width: 35px;
+  height: 35px;
 }
 
 .currentCell {
   background-color: purple;
 }
 
-.startNode {
+.startNode,#startNode {
   background-color: rgb(255, 82, 82);
 }
 
-.targetNode {
+.targetNode,#targetNode {
   background-color: rgb(255, 25, 0);
 }
 
 .shortestpath {
   background-color: rgb(255, 174, 0);
+}
+
+.block {
+  background-color: rgba(14, 17, 109, 0.849);
+}
+
+#VisualizingNav {
+  display: flex;
 }
