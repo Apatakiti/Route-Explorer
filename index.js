@@ -1,89 +1,146 @@
-import { BFS } from "./modules/Algorithms/BFS.js";
-import { DFS } from "./modules/Algorithms/DFS.js";
-import { Visualizer } from "./modules/visualizer.js";
 import { Grid_adjMatrix } from "./modules/Grid-graph.js";
+import { Recursive_Division } from "./modules/Mazes/Recursive_Division.js";
+import { Simple_Maze } from "./modules/Mazes/simpleMaze.js";
+import { DFS } from "./modules/Algorithms/DFS.js";
 import { dijkstra } from "./modules/Algorithms/DIjsktra.js";
-import { Astar }  from "./modules/Algorithms/A_star.js"
-import { Random_Start_TargetNode } from "./modules/Start-targetNode.js";
+import { Visualizer } from "./modules/visualizer.js";
 
-export class Route_explorer {
+const grid = new Grid_adjMatrix()
+const runDfs = new DFS()
 
-  start_target_Nodes() {
-   const [rows, cols] = this.total_Rows_Cols() 
- 
-   const start_target_node = Random_Start_TargetNode(rows, cols)
+const selectedMaze = document.getElementById("selectMaze");
+const selectedAlgo = document.getElementById("Algorithm")  
 
-   // console.log(startNode, targetNode)
-   const start_target_coords = [
-      start_target_node.startNode, 
-      start_target_node.targetNode
-    ];
+grid.graph(15, 30)
 
-    return start_target_coords;
-  }
+selectedMaze.addEventListener('change', () => {
 
-  total_Rows_Cols() {
-    const rows = 11
-    const cols = 11
+  const getBlocks = document.querySelectorAll(".block")
+  getBlocks.forEach(block => {
+    block.classList.remove('block')
+  });
 
-    return [rows, cols]
-  }
+      switch(selectedMaze.value) {
 
-  Search_with_BFS() {
-    const [start, target] = this.start_target_Nodes()
+        case "Basic_Random" :
 
-    const RunBFS = new BFS();
-    const Visualize = new Visualizer();
-    RunBFS.TraverseBFS(start, target);
-    Visualize.startNandTargetN(start, target);
-  };
+          document.querySelectorAll(".block").forEach(clas => {
+            clas.classList.remove('block')
+          });
 
-  Search_with_DFS() {
-    const [start, target] = this.start_target_Nodes()
-    const [row, col] = this.total_Rows_Cols()
+          document.querySelectorAll(".shortestpath").forEach(clas => {
+            clas.classList.remove('shortestpath')
+          });
+    
+          document.querySelectorAll(".currentCell").forEach(clas => {
+            clas.classList.remove('currentCell')
+          });
 
-    const grid = new Grid_adjMatrix(row, col);
-    const Matrix = grid.matrix;
-    grid.obstacle(10, 0, 1); 
 
-    const RunDFS = new DFS();
-    const Visualize = new Visualizer();
+           for (let i = 0; i < Simple_Maze.Matrix.length; i++) {
+            for (let j = 0; j < Simple_Maze.Matrix[0].length; j++) {
+      
+              if (Simple_Maze.Matrix[i][j] === 1) {
+                  const visualize = new Visualizer()
+                  visualize.Block(i, j)
+                }
+            }
+          }
+        break;
 
-    RunDFS.PathDFS(Matrix, start, target)
-    Visualize.startNandTargetN(start, target);
-  }
+        case "Recursive_Division":
 
-  // locally optimistic Approach
-  Search_with_Dijsktra() {
-    const [start, target] = this.start_target_Nodes()
-    const [row, col] = this.total_Rows_Cols()
+          document.querySelectorAll(".block").forEach(clas => {
+            clas.classList.remove('block')
+          });
 
-    const grid = new Grid_adjMatrix(row, col);
-    const Matrix = grid.matrix;
-    grid.obstacle(4, 1, Infinity);
+          document.querySelectorAll(".shortestpath").forEach(clas => {
+            clas.classList.remove('shortestpath')
+          });
+    
+          document.querySelectorAll(".currentCell").forEach(clas => {
+            clas.classList.remove('currentCell')
+          });
 
-    const Visualize = new Visualizer();
+            for (let i = 0; i < Recursive_Division.Matrix.length; i++) {
+              for (let j = 0; j < Recursive_Division.Matrix[0].length; j++) {
+        
+                if (Recursive_Division.Matrix[i][j] === 1) {
+                    const visualize = new Visualizer()
+                    visualize.Block(i, j)
+                  }
+              }
+            }
+          break;
+    }
+});
 
-    dijkstra(Matrix, start, target)
-    Visualize.startNandTargetN(start, target);
-  }
 
-  // Optimistic approach ( weighted ) 
-  Search_with_Astar() {
-    const [start, target] = this.start_target_Nodes()
-    const [row, col] = this.total_Rows_Cols()
 
-    const grid = new Grid_adjMatrix(row, col);
-    const Matrix = grid.matrix;
-    grid.obstacle(4, 0, Infinity); 
 
-    const run_Astar = new Astar()
-    const Visualize = new Visualizer();
+selectedAlgo.addEventListener('change', () => {
 
-    run_Astar.aStar(Matrix, start, target)
-    Visualize.startNandTargetN(start, target);
-  }  
+  switch (selectedAlgo.value) {
+  case "BFS":
+    console.log('a')
+    break;
 
+    case "DFS":
+  
+      document.querySelectorAll(".shortestpath").forEach(clas => {
+        clas.classList.remove('shortestpath')
+      });
+
+      document.querySelectorAll(".currentCell").forEach(clas => {
+        clas.classList.remove('currentCell')
+      });
+
+
+      if (selectedMaze.value === "Recursive_Division" || selectedMaze.value === "Basic_Random") {
+          runDfs.PathDFS(Recursive_Division.Matrix, Recursive_Division.startN, Recursive_Division.targetN)
+      } 
+    break;
+
+    case "Dijsktra":
+      document.querySelectorAll(".shortestpath").forEach(clas => {
+        clas.classList.remove('shortestpath')
+      });
+
+      if (selectedMaze.value === "Recursive_Division" || selectedMaze.value === "Basic_Random") {
+        dijkstra(Recursive_Division.Matrix, Recursive_Division.startN, Recursive_Division.targetN)
+    }
+    break;
+    case "A_star":
+      console.log('m')
+    break;
 }
+})
 
-new Route_explorer().Search_with_Dijsktra()
+
+
+document.getElementById('clearBoard').addEventListener('click', () => {
+
+  const getBlocks =  document.querySelectorAll(".block")
+  getBlocks.forEach(clas => {
+    clas.classList.remove('block')
+  });
+
+  const getPath =  document.querySelectorAll(".shortestpath")
+  getPath.forEach(clas => {
+    clas.classList.remove('shortestpath')
+  });
+
+  // const getStartNode =  document.querySelector(".startNode")
+  // getStartNode.classList.remove('startNode')
+
+  // const getTargetNode =  document.querySelector(".targetNode")
+  // getTargetNode.classList.remove('targetNode')
+
+
+  const getCurrentNode =  document.querySelectorAll(".currentCell")
+  getCurrentNode.forEach(clas => {
+    clas.classList.remove('currentCell')
+  });
+
+
+})
