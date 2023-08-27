@@ -7,26 +7,37 @@ export class Visualizer {
     const visualizeCurrentNode = document.getElementById(
       `${"cell" + row}${col}`
     );
-    visualizeCurrentNode.className = "currentCell";
+    visualizeCurrentNode.classList.add("currentCell")
   }
 
   shortestPath(row, col) {
     const visualizeCurrentNode = document.getElementById(
       `${"cell" + row}${col}`
     );
-    visualizeCurrentNode.className = "shortestpath";
+    visualizeCurrentNode.classList.add("shortestpath")
   }
 
   startNandTargetN(startN, targetN) {
     const visualizeStartNode = document.getElementById(
       `${"cell" + startN[0]}${startN[1]}`
     );
-    visualizeStartNode.className = "startNode";
+    // visualizeStartNode.className = "startNode";
+
+    visualizeStartNode.classList.add("startNode")
 
     const visualizeTargetNode = document.getElementById(
       `${"cell" + targetN[0]}${targetN[1]}`
     );
 
-    visualizeTargetNode.className = "targetNode";
+    visualizeTargetNode.classList.add("targetNode") 
   }
+
+  Block(row, col) {
+    const VisualizeMazeBlock = document.getElementById(
+      `${"cell" + row}${col}`
+    )
+    
+    VisualizeMazeBlock.classList.add("block")
+  } 
+
 }
