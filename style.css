@@ -10,26 +10,51 @@ body {
 
 header {
   text-align: left;
-  color: rgb(72, 83, 91);
-  padding: 2%;
-  padding-left:  4%;
+  color: rgb(35, 100, 146);
+  padding: .1%;
+  padding-left: 4%;
   font-size: 60px;
+  background-color: rgb(0, 0, 78);
+}
+
+#VisualizingNav {
+  display: flex;
+  justify-content: center;
+  padding: .1% 0%;
+  background-color: rgb(0, 0, 78);
+  border-bottom-left-radius: 11px;
+  border-bottom-right-radius: 11px;
+}
+
+#VisualizingNav > li {
+  margin: .9% 5%;
+  margin-top: 0%;
+}
+
+li {
+  list-style: none;
+}
+
+#color_icon_sign {
+  display: flex;
+  justify-content: center;
+}
+
+#color_icon_sign > li {
+  margin: .9% 3%;
+}
+
+#Algorithm {
+  color: rgb(128, 0, 0);
 }
 
 .grid-container {
   display: flex;
   padding: 1% 1%;
   margin: 1%;
-  /* border: 0.5px solid rgb(9, 255, 0); */
   justify-content: center;
   overflow: hidden;
 }
-
-#board {
-  width: 1000px;
-  height: 500px;
-}
-
 
 .cell,.cellRow {
   border: .1px solid rgb(0, 255, 195);
@@ -42,11 +67,19 @@ header {
   background-color: purple;
 }
 
-.startNode,#startNode {
+.startNode, #startNode {
   background-color: rgb(255, 82, 82);
 }
 
-.targetNode,#targetNode {
+.startNode {
+  background-color: rgb(255, 82, 82);
+}
+
+/* .targetNode, #targetNode {
+  background-color: rgb(255, 25, 0);
+} */
+
+.targetNode {
   background-color: rgb(255, 25, 0);
 }
 
