@@ -13,8 +13,8 @@
 
     <nav id="nav">
       <ul id="VisualizingNav">   
+        <li><button id="ST"  >generate start&target nodes</button></li>
       <li>
-        <span>generate Maze</span>
          <select  id="selectMaze">
               <option value="Basic_Random">Basic Random</option>
               <option value="Recursive_Division">
@@ -25,7 +25,7 @@
       </li>
 
       <li>
-          <select  id="Algorithm">
+          <select name="Algo"  id="Algorithm">
             <option value="BFS">BFS</option>
             <option value="DFS">DFS</option>
             <option value="Dijsktra">Dijsktra</option>
@@ -44,7 +44,7 @@
       </li>
       </ul>
 
-      <ul>
+      <ul id="color_icon_sign">
         <li>yellow path</li>
         <li>white unvisited</li>
         <li>blue Maze</li>
@@ -54,7 +54,7 @@
 
     <div class="grid-container">
       <table>
-        <tbody border="1" id="board"></tbody>
+        <tbody id="board"></tbody>
       </table>
     </div>
 
