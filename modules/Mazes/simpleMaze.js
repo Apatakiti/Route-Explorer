@@ -1,40 +1,24 @@
-   import { Visualizer } from "../visualizer.js";
-   import { Grid_adjMatrix } from "../Grid-graph.js";
-   import { start_target } from "../Start-targetNode.js";
+import { Matrix } from "../grid_Matrix.js";
 
-   const grid = new Grid_adjMatrix()
+export const SimpleMaze = () => {
+  const clearBlocks = document.querySelectorAll(".block")
+  clearBlocks.forEach(clas => {
+      clas.classList.remove('block')
+  });
 
-   const SimpleMaze = () => {
-
-//  (Lower Tendency there will be a path)
-//  2D array Matrix to Insert Maze 
-    const Maze_Matrix = [];
-
-    for (let i = 0; i < grid.matrix.length; i++) {
-      const rows = [];
-      for (let j = 0; j < grid.matrix[0].length; j++) {
-
-        // Generating random 0 or 1
-        const cellValue = Math.random() < 0.5   ? 0 : 1;
-        rows.push(cellValue);
-      }
-      Maze_Matrix.push(rows);
-    }
-
-
-    Maze_Matrix[start_target.startNode[0]][start_target.startNode[1]] = 0;
-    Maze_Matrix[start_target.targetNode[0]][start_target.targetNode[1]] = 0;
-
-    for (let i = 0; i < Maze_Matrix.length; i++) {
-      for (let j = 0; j < Maze_Matrix[0].length; j++) {
+  //  2D array Matrix to Insert Maze
+  const defaultMatrix = Matrix();
+  
+  for (let i = defaultMatrix.length - 1;  i >= 0 ;  i--) {
+    for (let  j = defaultMatrix[0].length - 1; j >= 0; j--) {
+      // Generating random 0 or 1
+      defaultMatrix[i][j] = Math.random() < 0.855 ? 0 : 1;
+      
+        if (defaultMatrix[i][j] === 1) {
+              document.getElementById(`cell${i}${j}`).classList.add('block')
       }
     }
-
-    return {   
-        startN: start_target.startNode,
-        targetN: start_target.targetNode,
-        Matrix: Maze_Matrix
-    };
-}
-
- export const Simple_Maze = SimpleMaze()
+  }
+  
+  return  defaultMatrix;
+};

@@ -48,13 +48,14 @@ document.getElementById("ST").addEventListener("click", () => {
   let startN = start_target.startNode;
   let targetN = start_target.targetNode;
 
+
   new Promise(() => {
     setTimeout(() => {
       let getSN = document.getElementsByClassName(
-        `cell${startN[0]}${startN[1]}`
+        `cell_${startN[0]}_${startN[1]}_`
       )[0];
       let getTN = document.getElementsByClassName(
-        `cell${targetN[0]}${targetN[1]}`
+        `cell_${targetN[0]}_${targetN[1]}_`
       )[0];
 
       getSN.classList.add("startNode");

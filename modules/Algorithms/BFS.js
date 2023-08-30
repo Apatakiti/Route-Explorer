@@ -1,14 +1,11 @@
-import { Grid_adjMatrix } from "../Grid-graph.js";
 import { Visualizer } from "../visualizer.js";
 
 export class BFS {
-  async TraverseBFS(startNode, targetNode) {
-    const grid_graph = new Grid_adjMatrix(11, 11);
+  async TraverseBFS(Matrix, startNode, targetNode) {
     const Visualize = new Visualizer();
-    grid_graph.obstacle(4, 5, 1);
 
-    const tableRow = grid_graph.matrix.length;
-    const tableCol = grid_graph.matrix[0].length;
+    const tableRow = Matrix.length;
+    const tableCol = Matrix[0].length;
 
     const directions = [
       [1, 0],
@@ -55,7 +52,7 @@ export class BFS {
           nextCol >= 0 &&
           tableRow > nextRow &&
           tableCol > nextCol &&
-          grid_graph.matrix[nextRow][nextCol] === 0 &&
+          Matrix[nextRow][nextCol] === 0 &&
           !visited.has(`${nextRow},${nextCol}`)
         ) {
           queue.push({
