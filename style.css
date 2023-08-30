@@ -10,7 +10,7 @@ body {
 
 header {
   text-align: left;
-  color: rgb(35, 100, 146);
+  color: rgb(0, 139, 239);
   padding: .1%;
   padding-left: 4%;
   font-size: 60px;
@@ -27,7 +27,7 @@ header {
 }
 
 #VisualizingNav > li {
-  margin: .9% 5%;
+  margin: .9% 3%;
   margin-top: 0%;
 }
 
@@ -71,6 +71,18 @@ li {
   background-color: rgb(255, 82, 82);
 }
 
+.shortestpath {
+  background-color: rgb(255, 174, 0);
+}
+
+.block {
+  background-color: rgba(14, 17, 109, 0.849);
+}
+
+#VisualizingNav {
+  display: flex;
+}
+
 .startNode {
   background-color: rgb(255, 82, 82);
 }
@@ -83,14 +95,16 @@ li {
   background-color: rgb(255, 25, 0);
 }
 
-.shortestpath {
-  background-color: rgb(255, 174, 0);
+#clearBoard, #selectedAlgo, #ST {
+  padding: 11px 11px;
+  background-color: rgb(136, 209, 255);
+  color: rgb(172, 4, 4);
+  font-size: 22px;
+  text-align: center;
 }
 
-.block {
-  background-color: rgba(14, 17, 109, 0.849);
-}
-
-#VisualizingNav {
-  display: flex;
+select {
+  padding: 11px 11px;
+  font-size: 22px;
+  background-color: rgb(136, 209, 255);
 }

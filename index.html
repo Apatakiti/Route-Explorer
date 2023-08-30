@@ -12,36 +12,35 @@
     <header>Route Explorer</header>
 
     <nav id="nav">
-      <ul id="VisualizingNav">   
-        <li><button id="ST"  >generate start&target nodes</button></li>
-      <li>
-         <select  id="selectMaze">
-              <option value="Basic_Random">Basic Random</option>
-              <option value="Recursive_Division">
-                Recursive Division
-                <span>Recommended</span>
-              </option>
-            </select>
-      </li>
+      <ul id="VisualizingNav">
+        <li><button id="ST">generate start&target nodes</button></li>
+        <li>
+          <select id="selectMaze">
+            <option value="Basic_Random">Basic Random</option>
+            <option value="Recursive_Division">
+              Recursive Division
+              <span>Recommended</span>
+            </option>
+          </select>
+        </li>
 
-      <li>
-          <select name="Algo"  id="Algorithm">
+        <li>
+          <select name="Algo" id="Algorithm">
             <option value="BFS">BFS</option>
             <option value="DFS">DFS</option>
             <option value="Dijsktra">Dijsktra</option>
             <option value="A*">A*</option>
-        </select>
-      </li>
-      <li>
-        <button>visualize 
-          <span id="show_Algo_selected">selectAlgo</span>
-        </button>
-      </li>
-      <li>
-        <button id="clearBoard">
-          clear board
-        </button>
-      </li>
+          </select>
+        </li>
+        <li>
+          <button id="selectedAlgo">
+            pick an Algorithm
+            <span id="show_Algo_selected"></span>
+          </button>
+        </li>
+        <li>
+          <button id="clearBoard">clear board</button>
+        </li>
       </ul>
 
       <ul id="color_icon_sign">
@@ -57,7 +56,6 @@
         <tbody id="board"></tbody>
       </table>
     </div>
-
   </body>
   <script type="module" src="./index.js"></script>
 </html>
