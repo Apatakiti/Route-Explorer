@@ -9,6 +9,7 @@ export class Visualizer {
     );
     
     visualizeCurrentNode.classList.add("currentCell")
+    
   }
 
   shortestPath(row, col) {

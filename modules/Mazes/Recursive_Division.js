@@ -1,4 +1,6 @@
-import { Matrix } from "../grid_Matrix.js";
+import { Matrix, row_col } from "../grid_Matrix.js";
+
+const [rols, cols] = row_col()
 
 const defaultMatrix = Matrix()
 
@@ -41,7 +43,7 @@ export const Recursive_Division = () => {
     }
 
     // Generate Maze
-    mazeGenerator(0, 0, 30, 15);
+    mazeGenerator(0, 0, cols, rols);
 
     for (let i = defaultMatrix.length - 1 ; i >= 0 ; i--) {
         for (let j = defaultMatrix[0].length - 1; j  >= 0; j--) {

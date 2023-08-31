@@ -44,20 +44,37 @@ li {
   margin: .9% 3%;
 }
 
-#Algorithm {
+#Algorithm, #selectMaze {
   color: rgb(128, 0, 0);
 }
 
 .grid-container {
   display: flex;
+  flex-direction: column;
   padding: 1% 1%;
   margin: 1%;
   justify-content: center;
   overflow: hidden;
+  height: 650px;
+  width: 1050px;
+  white-space: nowrap;
 }
 
-.cell,.cellRow {
-  border: .1px solid rgb(0, 255, 195);
+#table_header {
+  display: grid;
+  grid-template-rows: auto;
+}
+
+#table_label {
+  font-size: 30px;
+  align-self: flex-end;
+}
+
+#Notes {
+  align-self: flex-end;
+}
+
+.cell {
   background-color: white;
   width: 35px;
   height: 35px;
@@ -83,18 +100,6 @@ li {
   display: flex;
 }
 
-.startNode {
-  background-color: rgb(255, 82, 82);
-}
-
-/* .targetNode, #targetNode {
-  background-color: rgb(255, 25, 0);
-} */
-
-.targetNode {
-  background-color: rgb(255, 25, 0);
-}
-
 #clearBoard, #selectedAlgo, #ST {
   padding: 11px 11px;
   background-color: rgb(136, 209, 255);
@@ -107,4 +112,12 @@ select {
   padding: 11px 11px;
   font-size: 22px;
   background-color: rgb(136, 209, 255);
+}
+
+.startNode {
+  background-color: rgb(255, 82, 82);
+}
+
+.targetNode {
+  background-color: rgb(255, 25, 0);
 }

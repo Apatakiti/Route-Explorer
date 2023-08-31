@@ -29,7 +29,8 @@ export class BFS {
       visited.add(`${currentRowNode},${currentColNode}`);
 
       // Delay to Visualize
-      await Visualize.delay();
+      // await Visualize.delay();
+      await new Promise((res) => setTimeout(res, 20))
       Visualize.visiting(currentRowNode, currentColNode);
 
       // Terminate/return shortest path on targetNode
@@ -37,7 +38,9 @@ export class BFS {
         currentRowNode === targetNode[0] &&
         currentColNode === targetNode[1]
       ) {
-        for (const [currentRow, currentCol] of trackPath) {
+        for ( const [currentRow, currentCol] of trackPath) {
+
+
           await Visualize.delay();
           Visualize.shortestPath(currentRow, currentCol);
         }

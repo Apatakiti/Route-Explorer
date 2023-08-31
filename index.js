@@ -1,39 +1,20 @@
 import { Recursive_Division } from "./modules/Mazes/Recursive_Division.js";
 import { BFS } from "./modules/Algorithms/BFS.js";
 import { DFS } from "./modules/Algorithms/DFS.js";
-// import { dijkstra } from "./modules/Algorithms/DIjsktra.js";
-// import { Astar } from "./modules/Algorithms/A_star.js";
-// import { Visualizer } from "./modules/visualizer.js";
+import { dijkstra } from "./modules/Algorithms/DIjsktra.js";
+import { Astar } from "./modules/Algorithms/A_star.js";
 import { getStartTargetNode } from "./modules/get_start_target_Node.js";
 import { SimpleMaze } from "./modules/Mazes/simpleMaze.js";
 import { Random_Start_TargetNode } from "./modules/set_Start_targetNode.js";
 import { graph } from "./modules/graph.js";
+import { row_col } from "./modules/grid_Matrix.js";
+
+const [rols, cols] = row_col()
 
 Random_Start_TargetNode();
-graph(15, 30);
+graph(rols, cols);
 
 document.getElementById("ST").addEventListener("click", () => {
-
-//   const getBlocks =  document.querySelectorAll(".block")
-//   getBlocks.forEach(clas => {
-//     clas.classList.remove('block')
-//   });
-
-//   const getPath =  document.querySelectorAll(".shortestpath")
-//   getPath.forEach(clas => {
-//     clas.classList.remove('shortestpath')
-//   });
-
-  // const getStartNode =  document.querySelector(".startNode")
-  // getStartNode.classList.remove('startNode')
-
-  // const getTargetNode =  document.querySelector(".targetNode")
-  // getTargetNode.classList.remove('targetNode')
-
-//   const getCurrentNode =  document.querySelectorAll(".currentCell")
-//   getCurrentNode.forEach(clas => {
-//     clas.classList.remove('currentCell')
-//   });
 
   setTimeout(() => {
     let STnodes = getStartTargetNode();
@@ -56,15 +37,15 @@ document.getElementById("ST").addEventListener("click", () => {
       // switching Maze
       switch (selectedMaze.value) {
 
-        //////////////////// for Basic Random maze //////////////////////////////
+        // Basic Random maze 
         case "Basic_Random":
           const simple_Maze = SimpleMaze();
 
-        //   Algo selection for basic random
+          //  Algo selection for basic random
           const selectedAlgo1 = document.getElementById("Algorithm");
           selectedAlgo1.addEventListener("change", () => {
 
-            // switching Algorithms per maze for  basic random maze
+            // switching Algorithms per maze for basic random maze
             switch (selectedAlgo1.value) {
               case "BFS":
                 document.getElementById("selectedAlgo").addEventListener("click", () => {
@@ -83,17 +64,39 @@ document.getElementById("ST").addEventListener("click", () => {
                 break;
 
               case "Dijsktra":
-                console.log("you havent set dijsktra");
-                break;
+                document.getElementById("selectedAlgo").addEventListener("click", () => {
+                for (let i = 0; i < simple_Maze.length; i++) {
+                  for (let j = 0; j < simple_Maze[0].length; j++) {
+                    if (simple_Maze[i][j] === 1 ) {
+                      simple_Maze[i][j] = Infinity;
+                    }
+                  }
+                }
+                simple_Maze[STnodes.startN[0]][STnodes.startN[1]] = 0;
+                simple_Maze[STnodes.targetN[0]][STnodes.targetN[1]] = 0;
+                dijkstra(simple_Maze, STnodes.startN, STnodes.targetN)
+                });
+              break;
 
               case "A*":
-                console.log("you havent set A star");
-                break;
+                document.getElementById("selectedAlgo").addEventListener("click", () => {
+                  for (let i = 0; i < simple_Maze.length; i++) {
+                    for (let j = 0; j < simple_Maze[0].length; j++) {
+                      if (simple_Maze[i][j] === 1 ) {
+                        simple_Maze[i][j] = Infinity;
+                      }
+                    }
+                  }
+                  simple_Maze[STnodes.startN[0]][STnodes.startN[1]] = 0;
+                  simple_Maze[STnodes.targetN[0]][STnodes.targetN[1]] = 0;
+                  new Astar().aStar(simple_Maze, STnodes.startN, STnodes.targetN)
+                  });
+              break;
             }
           });
           break;
 
-        ////////////////   for  Recursive Division  //////////////////////
+        // Recursive Division  
         case "Recursive_Division":
           const RecursiveDivision = Recursive_Division();
 
@@ -119,15 +122,36 @@ document.getElementById("ST").addEventListener("click", () => {
                 break;
 
               case "Dijsktra":
-                console.log("you havent set dijsktra");
+                document.getElementById("selectedAlgo").addEventListener("click", () => {
+                  for (let i = 0; i < RecursiveDivision.length; i++) {
+                    for (let j = 0; j < RecursiveDivision[0].length; j++) {
+                      if (RecursiveDivision[i][j] === 1 ) {
+                        RecursiveDivision[i][j] = Infinity;
+                      }
+                    }
+                  }
+                  RecursiveDivision[STnodes.startN[0]][STnodes.startN[1]] = 0;
+                  RecursiveDivision[STnodes.targetN[0]][STnodes.targetN[1]] = 0;
+                  dijkstra(RecursiveDivision, STnodes.startN, STnodes.targetN)
+                  });
                 break;
 
               case "A*":
-                console.log("you havent set A star");
+                document.getElementById("selectedAlgo").addEventListener("click", () => {
+                  for (let i = 0; i < RecursiveDivision.length; i++) {
+                    for (let j = 0; j < RecursiveDivision[0].length; j++) {
+                      if (RecursiveDivision[i][j] === 1 ) {
+                        RecursiveDivision[i][j] = Infinity;
+                      }
+                    }
+                  }
+                  RecursiveDivision[STnodes.startN[0]][STnodes.startN[1]] = 0;
+                  RecursiveDivision[STnodes.targetN[0]][STnodes.targetN[1]] = 0;
+                  new Astar().aStar(RecursiveDivision, STnodes.startN, STnodes.targetN)
+                  });
                 break;
             }
           });
-
           break;
       }
     });
@@ -139,20 +163,22 @@ document.getElementById("ST").addEventListener("click", () => {
    
  selectedAlgo.addEventListener('change', () => {
       switch (selectedAlgo.value) {
-                case "BFS":
-                    visualizeBtn.textContent =  `Visualize ${selectedAlgo.value}`
-                  break;
-                case "DFS":
-                    visualizeBtn.textContent = `Visualize ${selectedAlgo.value}`
-                  break;
-                case "Dijsktra":
-                    visualizeBtn.textContent = `Visualize ${selectedAlgo.value}`
-                  break;
-                case "A*":
-                    visualizeBtn.textContent = `Visualize ${selectedAlgo.value}`
-                  break;
-              }
+          case "BFS":
+              visualizeBtn.textContent =  `Visualize ${selectedAlgo.value}`
+            break;
+          case "DFS":
+              visualizeBtn.textContent = `Visualize ${selectedAlgo.value}`
+            break;
+          case "Dijsktra":
+              visualizeBtn.textContent = `Visualize ${selectedAlgo.value}`
+            break;
+          case "A*":
+              visualizeBtn.textContent = `Visualize ${selectedAlgo.value}`
+            break;
+        }
  })
+
+ 
 
 document.getElementById('clearBoard').addEventListener('click', () => {
 
@@ -166,15 +192,16 @@ document.getElementById('clearBoard').addEventListener('click', () => {
     clas.classList.remove('shortestpath')
   });
 
-  // const getStartNode =  document.querySelector(".startNode")
-  // getStartNode.classList.remove('startNode')
+  const getStartNode =  document.querySelector(".startNode")
+  getStartNode.classList.remove('startNode')
 
-  // const getTargetNode =  document.querySelector(".targetNode")
-  // getTargetNode.classList.remove('targetNode')
+  const getTargetNode =  document.querySelector(".targetNode")
+  getTargetNode.classList.remove('targetNode')
 
   const getCurrentNode =  document.querySelectorAll(".currentCell")
   getCurrentNode.forEach(clas => {
     clas.classList.remove('currentCell')
   });
 
+  location.reload()
 })

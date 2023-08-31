@@ -1,7 +1,5 @@
-const rows = 15;
-const cols = 30;
-
-export const row_col = [rows, cols];
+import { row_col } from "./grid_Matrix.js";
+const [rows, cols] = row_col()
 
 export const Random_Start_TargetNode = () => {
   // Random StartNode falling on the left side of the grid
