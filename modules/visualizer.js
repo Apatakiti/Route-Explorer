@@ -1,7 +1,7 @@
 export class Visualizer {
   delay() {
     return new Promise((res) => setTimeout(res, 100));
-  }
+  } 
 
   visiting(row, col) {
     const visualizeCurrentNode = document.getElementById(
@@ -23,7 +23,6 @@ export class Visualizer {
     const visualizeStartNode = document.getElementById(
       `cell${startN[0]}${startN[1]}`
     );
-    // visualizeStartNode.className = "startNode";
 
     visualizeStartNode.classList.add("startNode")
 

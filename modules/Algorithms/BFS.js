@@ -30,7 +30,7 @@ export class BFS {
 
       // Delay to Visualize
       // await Visualize.delay();
-      await new Promise((res) => setTimeout(res, 20))
+      await new Promise((res) => setTimeout(res, 2))
       Visualize.visiting(currentRowNode, currentColNode);
 
       // Terminate/return shortest path on targetNode

@@ -32,8 +32,14 @@ export const Recursive_Division = () => {
             for (let x = x1; x < x2; x++) {
                 if (horizontal && y === wallY && (x < wallX || x > passageX)) {
                     defaultMatrix[y][x] = 1;
+                    if (defaultMatrix[y][x] === 1) {
+                        document.getElementById(`cell${y}${x}`).classList.add('block')       
+                    }
                 } else if (!horizontal && x === wallX && (y < wallY || y > passageY)) {
                     defaultMatrix[y][x] = 1;
+                    if (defaultMatrix[y][x] === 1) {
+                            document.getElementById(`cell${y}${x}`).classList.add('block')
+                       }
                 }
             }
         }
@@ -42,16 +48,7 @@ export const Recursive_Division = () => {
         mazeGenerator(horizontal ? x1 : wallX + 1, horizontal ? wallY + 1 : y1, x2, y2);
     }
 
-    // Generate Maze
     mazeGenerator(0, 0, cols, rols);
-
-    for (let i = defaultMatrix.length - 1 ; i >= 0 ; i--) {
-        for (let j = defaultMatrix[0].length - 1; j  >= 0; j--) {
-            if (defaultMatrix[i][j] === 1) {
-                document.getElementById(`cell${i}${j}`).classList.add('block')
-            }
-        }
-    }
 
     return  defaultMatrix;
 }

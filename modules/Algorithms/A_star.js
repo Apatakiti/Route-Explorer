@@ -45,7 +45,7 @@ const Visualize = new Visualizer()
         const neighbors = this.re_direct(current[0], current[1], tableRow, tableCol);
 
         for (const neighbor of neighbors) {
-            const tentativeActualCost_gScore = ActualCost_gScore.get(current) + grid[neighbor[0]][neighbor[1]];
+            const tentativeActualCost_gScore = ActualCost_gScore.get(current) + grid[neighbor[0]][neighbor[1]];            
 
             if (
               !ActualCost_gScore.has(neighbor) || 
@@ -59,7 +59,7 @@ const Visualize = new Visualizer()
         }
     }
 
-    return null; // No path found
+    return; // No path found
   }
 
   heuristic_EstimatedCost(currentNode, targetNode) {
