@@ -1,7 +1,7 @@
 // Matrix for Visitable(0) and Unvisitable/obstacle(1) node
 export const row_col = () => {
-  const rows = 13;
-  const cols = 26;
+  const rows = 11;
+  const cols = 30;
   return [rows, cols]
 }
 
