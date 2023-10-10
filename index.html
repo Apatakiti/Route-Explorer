@@ -4,76 +4,84 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous"> -->
-    
-    <title>Route-Explorer</title>
     <link rel="stylesheet" href="style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Route-Explorer</title>
   </head>
 
   <body>
-    <header>Route Explorer</header>
+    <div id="body">
+      <header>Route Explorer</header>
 
-    <nav id="nav">
-      <ul id="VisualizingNav">
-        <li><button id="ST">generate start&target nodes</button></li>
-        <li>
-          <select id="selectMaze">
-            <option style="display: none;" value="">Mazes</option>
-            <option value="Basic_Random">Basic Random</option>
-            <option value="Recursive_Division"> Recursive Division </option>
-          </select>
-        </li>
+      <nav id="nav">
+        <ul id="VisualizingNav">
+          <li>
+            <button id="ST" class="btn btn-primary btn-lg">
+              generate start & target nodes
+            </button>
+          </li>
+          <li>
+            <select
+              id="selectMaze"
+              class="btn btn-primary btn-lg"
+              style="color: white"
+            >
+              <option style="display: none" value="">Mazes</option>
+              <option value="Basic_Random">Basic Random</option>
+              <option value="Recursive_Division">Recursive Division</option>
+            </select>
+          </li>
 
-        <li>
-          <select id="Algorithm">
-            <option style="display: none;" value="">Algorithms</option>
-            <option value="BFS">BFS</option>
-            <option value="DFS">DFS</option>
-            <option value="Dijsktra">Dijsktra</option>
-            <option value="A*">A*</option>
-          </select>
-        </li>
-        <li>
-          <button id="selectedAlgo">
-            pick an Algorithm
-            <span id="show_Algo_selected"></span>
-          </button>
-        </li>
-        <li>
-          <button id="clearBoard">clear board/reload</button>
-        </li>
-      </ul>
+          <li>
+            <select
+              id="Algorithm"
+              class="btn btn-primary btn-lg"
+              style="color: white"
+            >
+              <option style="display: none" value="">Algorithms</option>
+              <option value="BFS">BFS</option>
+              <option value="DFS">DFS</option>
+              <option value="Dijsktra">Dijsktra</option>
+              <option value="A*">A*</option>
+            </select>
+          </li>
+          <!-- Visualizing Btn -->
+          <li id="visualizingBtn"></li>
+          <li>
+            <button id="clearBoard" class="btn btn-primary btn-lg">
+              clear board
+            </button>
+          </li>
+        </ul>
 
-      <ul id="color_icon_sign">
-        <li>yellow path</li>
-        <li>white unvisited</li>
-        <li>blue Maze</li>
-        <li>dark blue visited</li>
-      </ul>
-    </nav>
+        <ul id="color_icon_sign">
+          <li class="signs" style="display: flex;"><span class="black_cell" style="margin-right: 5px;"> </span>Start Node</li>
+          <li class="signs"><span class="Red_cell cell_colors">  </span>Target Node</li>
+          <li class="signs"><span class="purple_cell cell_colors"> </span>Visited</li>
+          <li class="signs"><span class="white_cell cell_colors"> </span>Unvisited</li>
+          <li class="signs"><span class="yellow_cell cell_colors"> </span>Shortest Path</li>
+          <li class="signs"><span class="blue_cell cell_colors"> </span>Maze</li>
+        </ul>
+      </nav>
 
-    <div class="grid-container">
-      <div id="table_header">
-        <div id="table_label">Visualizing Table</div>
-        <div id="Notes">lessons</div>
+      <div class="content">
+        <div class="grid-container">
+          <div id="table_header">
+            <div id="table_label">Visualizing Table</div>
+            <p id="Notes"></p>
+          </div>
+
+          <table style="border: 1px solid rgb(34, 202, 214)">
+            <tbody id="board"></tbody>
+          </table>
+        </div>
       </div>
-      <table style="border: 3px solid rgb(0, 0, 78);">
-        <tbody id="board"></tbody>
-      </table>
     </div>
   </body>
-  <!-- <script async src="https://cdn.jsdelivr.net/npm/es-module-shims@1/dist/es-module-shims.min.js" crossorigin="anonymous"></script>
-    <script type="importmap">
-    {
-      "imports": {
-        "@popperjs/core": "https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/esm/popper.min.js",
-        "bootstrap": "https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.esm.min.js"
-      }
-    }
-    </script>
-    <script type="module">
-      import * as bootstrap from 'bootstrap'
-      new bootstrap.Popover(document.getElementById('popoverButton'))
-    </script> -->
   <script type="module" src="./index.js"></script>
 </html>
