@@ -1,9 +1,5 @@
 # Route-Explorer
 
-![](https://img.shields.io/badge/Microverse-blueviolet)
-
-# Go-wallet
-
 > Description the project
 
 An Application which finds the location of a target node from an origin and uses multiple algorithms to find the shortest part or available part, built with Javascript.
@@ -20,7 +16,7 @@ An Application which finds the location of a target node from an origin and uses
 
 ## Live Demo
 
-[kindly view](https://deluxe-pastelito-851812.netlify.app/)
+<!--! [kindly view](https://deluxe-pastelito-851812.netlify.app/)  -->
 
 ## Getting Started
 
@@ -36,10 +32,9 @@ you can have a copy of this project by cloning this repo to your local machine
 
 ## Install
  
- - `npm i`
- 
- ## Run
- - `npm start`
+ - Live Server Extension
+ - Right click the HTML file and click `Open with Live Server` OR Alt + L Alt + O
+
 
 ## Prerequisites
 
