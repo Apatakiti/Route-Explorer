@@ -1,8 +1,6 @@
 # Route-Explorer
 
-> Description the project
-
-An Application which finds the location of a target node from an origin and uses multiple algorithms to find the shortest part or available part, built with Javascript.
+> An Application which finds the location of a target node from an origin and uses multiple algorithms to find the shortest part or available part, built with Javascript.
 
 ![Route-Explorer](https://github.com/Ademola-coding/Route-Explorer/assets/96092850/8d761477-6a56-4eae-a176-dfa9a8b2a736)
 
