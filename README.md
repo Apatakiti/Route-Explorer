@@ -4,7 +4,8 @@
 
 An Application which finds the location of a target node from an origin and uses multiple algorithms to find the shortest part or available part, built with Javascript.
 
-![Go wallet](https://github.com/Ademola-coding/Go-wallet/a915e-dc0f4148439c)
+![Route-Explorer](https://github.com/Ademola-coding/Route-Explorer/assets/96092850/8d761477-6a56-4eae-a176-dfa9a8b2a736)
+
 
 <!--! ## Video Description
 
@@ -16,7 +17,7 @@ An Application which finds the location of a target node from an origin and uses
 
 ## Live Demo
 
-<!--! [kindly view](https://deluxe-pastelito-851812.netlify.app/)  -->
+[kindly view](https://harmonious-sprinkles-e2fef3.netlify.app/)
 
 ## Getting Started
 
