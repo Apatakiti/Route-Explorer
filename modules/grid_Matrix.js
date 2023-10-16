@@ -9,6 +9,6 @@ const [rols, cols] = row_col()
 
 export const Matrix = () => {
     const grid_Matrix = new Array(rols).fill().map(() => new Array(cols).fill(0));
-    grid_Matrix[0][0] = 1
+    grid_Matrix[1][1] = 1
     return grid_Matrix;
   }
