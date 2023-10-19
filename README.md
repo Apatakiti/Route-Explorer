@@ -14,8 +14,9 @@
 - Major languages : JavaScript.
 
 ## Live Demo
-
+Note: kindly switch to desktop view if on mobile in chrome browser.
 [kindly view](https://harmonious-sprinkles-e2fef3.netlify.app/)
+
 
 ## Getting Started
 
